@@ -1,0 +1,586 @@
+import React, { useState, useEffect } from 'react';
+import { Calendar, Users, FileText, Bell, Save, Clock, User, Plus, Edit, Trash2, Eye, Search, BookOpen } from 'lucide-react';
+
+const SpeechTherapyClinicApp = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [code, setCode] = useState('');
+  const [currentView, setCurrentView] = useState('dashboard');
+  const [notifications, setNotifications] = useState([]);
+  
+  // Data states
+  const [appointments, setAppointments] = useState([
+    { id: 1, childName: 'أحمد محمد', date: '2025-09-08', time: '10:00', status: 'مؤكد', notes: 'جلسة تقييم أولي' },
+    { id: 2, childName: 'سارة أحمد', date: '2025-09-08', time: '11:00', status: 'مؤكد', notes: 'متابعة تحسن النطق' }
+  ]);
+  
+  const [children, setChildren] = useState([
+    { 
+      id: 1, 
+      name: 'أحمد محمد', 
+      age: 6, 
+      condition: 'تأخر النطق', 
+      parentName: 'محمد علي',
+      phone: '123456789',
+      startDate: '2025-08-01',
+      progress: 'ممتاز',
+      sessions: 8
+    },
+    { 
+      id: 2, 
+      name: 'سارة أحمد', 
+      age: 5, 
+      condition: 'صعوبة نطق الحروف', 
+      parentName: 'أحمد حسن',
+      phone: '987654321',
+      startDate: '2025-07-15',
+      progress: 'جيد',
+      sessions: 12
+    }
+  ]);
+  
+  const [dailyReports, setDailyReports] = useState([
+    { 
+      id: 1, 
+      date: '2025-09-07', 
+      childId: 1, 
+      childName: 'أحمد محمد',
+      activities: 'تمارين نطق حرف الراء، قراءة كلمات بسيطة',
+      progress: 'تحسن ملحوظ في نطق حرف الراء',
+      homework: 'تكرار تمارين النطق في المنزل 10 دقائق يومياً',
+      nextGoal: 'إتقان نطق حرف الراء في الجمل'
+    }
+  ]);
+  
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState('');
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  // Authentication
+  const handleLogin = () => {
+    if (code === '1110') {
+      setIsAuthenticated(true);
+      setCode('');
+      // Add welcome notification
+      setNotifications([{
+        id: Date.now(),
+        message: 'مرحباً وفاق وهبي! تم تسجيل الدخول بنجاح',
+        type: 'success',
+        time: new Date().toLocaleTimeString('ar-EG')
+      }]);
+    } else {
+      alert('كود خاطئ، الرجاء المحاولة مرة أخرى');
+    }
+  };
+
+  // Save function
+  const saveData = () => {
+    const data = {
+      appointments,
+      children,
+      dailyReports,
+      timestamp: new Date().toISOString()
+    };
+    
+    // In a real app, this would save to a database
+    console.log('Data saved:', data);
+    
+    setNotifications(prev => [{
+      id: Date.now(),
+      message: 'تم حفظ جميع البيانات بنجاح',
+      type: 'success',
+      time: new Date().toLocaleTimeString('ar-EG')
+    }, ...prev]);
+  };
+
+  // Check for upcoming appointments
+  useEffect(() => {
+    if (isAuthenticated) {
+      const today = new Date().toISOString().split('T')[0];
+      const upcomingAppointments = appointments.filter(apt => apt.date === today);
+      
+      if (upcomingAppointments.length > 0) {
+        setNotifications(prev => [{
+          id: Date.now(),
+          message: `لديك ${upcomingAppointments.length} موعد اليوم`,
+          type: 'info',
+          time: new Date().toLocaleTimeString('ar-EG')
+        }, ...prev]);
+      }
+    }
+  }, [isAuthenticated, appointments]);
+
+  // Modal functions
+  const openModal = (type, item = null) => {
+    setModalType(type);
+    setSelectedItem(item);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedItem(null);
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-2xl shadow-2xl w-96 text-center">
+          <div className="mb-6">
+            <BookOpen className="mx-auto h-16 w-16 text-blue-600 mb-4" />
+            <h1 className="text-2xl font-bold text-gray-800 mb-2">عيادة تقويم النطق</h1>
+            <p className="text-lg text-blue-600 font-semibold">أخصائية وفاق وهبي</p>
+          </div>
+          
+          <div className="mb-6">
+            <input
+              type="password"
+              placeholder="أدخل كود الدخول"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              className="w-full p-3 border-2 border-gray-300 rounded-lg text-center text-xl font-bold"
+              onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+            />
+          </div>
+          
+          <button
+            onClick={handleLogin}
+            className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition font-semibold"
+          >
+            دخول
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50" dir="rtl">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b">
+        <div className="px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4 space-x-reverse">
+              <BookOpen className="h-8 w-8 text-blue-600" />
+              <div>
+                <h1 className="text-xl font-bold text-gray-800">عيادة تقويم النطق</h1>
+                <p className="text-sm text-gray-600">أخصائية وفاق وهبي</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-4 space-x-reverse">
+              {/* Notifications */}
+              <div className="relative">
+                <Bell className="h-6 w-6 text-gray-600" />
+                {notifications.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {notifications.length}
+                  </span>
+                )}
+              </div>
+              
+              <button
+                onClick={saveData}
+                className="flex items-center space-x-2 space-x-reverse bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+              >
+                <Save className="h-4 w-4" />
+                <span>حفظ</span>
+              </button>
+              
+              <button
+                onClick={() => setIsAuthenticated(false)}
+                className="text-gray-600 hover:text-gray-800"
+              >
+                خروج
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-64 bg-white shadow-sm h-screen">
+          <nav className="p-4 space-y-2">
+            <button
+              onClick={() => setCurrentView('dashboard')}
+              className={`w-full flex items-center space-x-3 space-x-reverse p-3 rounded-lg transition ${
+                currentView === 'dashboard' ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <Calendar className="h-5 w-5" />
+              <span>لوحة التحكم</span>
+            </button>
+            
+            <button
+              onClick={() => setCurrentView('appointments')}
+              className={`w-full flex items-center space-x-3 space-x-reverse p-3 rounded-lg transition ${
+                currentView === 'appointments' ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <Clock className="h-5 w-5" />
+              <span>المواعيد</span>
+            </button>
+            
+            <button
+              onClick={() => setCurrentView('children')}
+              className={`w-full flex items-center space-x-3 space-x-reverse p-3 rounded-lg transition ${
+                currentView === 'children' ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <Users className="h-5 w-5" />
+              <span>ملفات الأطفال</span>
+            </button>
+            
+            <button
+              onClick={() => setCurrentView('reports')}
+              className={`w-full flex items-center space-x-3 space-x-reverse p-3 rounded-lg transition ${
+                currentView === 'reports' ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <FileText className="h-5 w-5" />
+              <span>التقارير اليومية</span>
+            </button>
+          </nav>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 p-6">
+          {/* Notifications Panel */}
+          {notifications.length > 0 && (
+            <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <h3 className="font-semibold text-blue-800 mb-2 flex items-center">
+                <Bell className="h-5 w-5 ml-2" />
+                الإشعارات
+              </h3>
+              <div className="space-y-2">
+                {notifications.slice(0, 3).map(notification => (
+                  <div key={notification.id} className="flex items-center justify-between text-sm">
+                    <span className="text-blue-700">{notification.message}</span>
+                    <span className="text-blue-500">{notification.time}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Dashboard View */}
+          {currentView === 'dashboard' && (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-gray-800">لوحة التحكم</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-gray-600">إجمالي الأطفال</p>
+                      <p className="text-2xl font-bold text-blue-600">{children.length}</p>
+                    </div>
+                    <Users className="h-8 w-8 text-blue-500" />
+                  </div>
+                </div>
+                
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-gray-600">مواعيد اليوم</p>
+                      <p className="text-2xl font-bold text-green-600">
+                        {appointments.filter(apt => apt.date === new Date().toISOString().split('T')[0]).length}
+                      </p>
+                    </div>
+                    <Clock className="h-8 w-8 text-green-500" />
+                  </div>
+                </div>
+                
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-gray-600">التقارير</p>
+                      <p className="text-2xl font-bold text-purple-600">{dailyReports.length}</p>
+                    </div>
+                    <FileText className="h-8 w-8 text-purple-500" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Today's Schedule */}
+              <div className="bg-white rounded-lg shadow-sm p-6">
+                <h3 className="text-lg font-semibold mb-4">برنامج اليوم</h3>
+                <div className="space-y-3">
+                  {appointments.filter(apt => apt.date === new Date().toISOString().split('T')[0]).map(apt => (
+                    <div key={apt.id} className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                      <div>
+                        <p className="font-medium">{apt.childName}</p>
+                        <p className="text-sm text-gray-600">{apt.notes}</p>
+                      </div>
+                      <span className="text-blue-600 font-medium">{apt.time}</span>
+                    </div>
+                  ))}
+                  {appointments.filter(apt => apt.date === new Date().toISOString().split('T')[0]).length === 0 && (
+                    <p className="text-gray-500 text-center py-4">لا توجد مواعيد اليوم</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Appointments View */}
+          {currentView === 'appointments' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-gray-800">المواعيد</h2>
+                <button
+                  onClick={() => openModal('appointment')}
+                  className="flex items-center space-x-2 space-x-reverse bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span>موعد جديد</span>
+                </button>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                <table className="w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="text-right p-4 font-semibold">اسم الطفل</th>
+                      <th className="text-right p-4 font-semibold">التاريخ</th>
+                      <th className="text-right p-4 font-semibold">الوقت</th>
+                      <th className="text-right p-4 font-semibold">الحالة</th>
+                      <th className="text-right p-4 font-semibold">الملاحظات</th>
+                      <th className="text-right p-4 font-semibold">الإجراءات</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {appointments.map(apt => (
+                      <tr key={apt.id} className="border-t">
+                        <td className="p-4">{apt.childName}</td>
+                        <td className="p-4">{apt.date}</td>
+                        <td className="p-4">{apt.time}</td>
+                        <td className="p-4">
+                          <span className={`px-2 py-1 rounded-full text-xs ${
+                            apt.status === 'مؤكد' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                          }`}>
+                            {apt.status}
+                          </span>
+                        </td>
+                        <td className="p-4">{apt.notes}</td>
+                        <td className="p-4">
+                          <div className="flex space-x-2 space-x-reverse">
+                            <button
+                              onClick={() => openModal('appointment', apt)}
+                              className="text-blue-600 hover:text-blue-800"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* Children View */}
+          {currentView === 'children' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-gray-800">ملفات الأطفال</h2>
+                <button
+                  onClick={() => openModal('child')}
+                  className="flex items-center space-x-2 space-x-reverse bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span>ملف جديد</span>
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {children.map(child => (
+                  <div key={child.id} className="bg-white rounded-lg shadow-sm p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-semibold">{child.name}</h3>
+                      <div className="flex space-x-2 space-x-reverse">
+                        <button
+                          onClick={() => openModal('child', child)}
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => openModal('viewChild', child)}
+                          className="text-green-600 hover:text-green-800"
+                        >
+                          <Eye className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2 text-sm">
+                      <p><span className="font-medium">العمر:</span> {child.age} سنوات</p>
+                      <p><span className="font-medium">الحالة:</span> {child.condition}</p>
+                      <p><span className="font-medium">ولي الأمر:</span> {child.parentName}</p>
+                      <p><span className="font-medium">عدد الجلسات:</span> {child.sessions}</p>
+                      <p><span className="font-medium">التقدم:</span> 
+                        <span className={`ml-2 px-2 py-1 rounded-full text-xs ${
+                          child.progress === 'ممتاز' ? 'bg-green-100 text-green-800' : 
+                          child.progress === 'جيد' ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {child.progress}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Reports View */}
+          {currentView === 'reports' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-gray-800">التقارير اليومية</h2>
+                <button
+                  onClick={() => openModal('report')}
+                  className="flex items-center space-x-2 space-x-reverse bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span>تقرير جديد</span>
+                </button>
+              </div>
+              
+              <div className="space-y-4">
+                {dailyReports.map(report => (
+                  <div key={report.id} className="bg-white rounded-lg shadow-sm p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <h3 className="text-lg font-semibold">{report.childName}</h3>
+                        <p className="text-sm text-gray-600">{report.date}</p>
+                      </div>
+                      <button
+                        onClick={() => openModal('report', report)}
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </button>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <p className="font-medium text-gray-700 mb-1">الأنشطة المنفذة:</p>
+                        <p className="text-gray-600">{report.activities}</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-700 mb-1">التقدم:</p>
+                        <p className="text-gray-600">{report.progress}</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-700 mb-1">الواجب المنزلي:</p>
+                        <p className="text-gray-600">{report.homework}</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-700 mb-1">الهدف التالي:</p>
+                        <p className="text-gray-600">{report.nextGoal}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </main>
+      </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">
+                {modalType === 'appointment' ? 'موعد' : 
+                 modalType === 'child' ? 'ملف طفل' : 
+                 modalType === 'report' ? 'تقرير يومي' :
+                 modalType === 'viewChild' ? 'عرض ملف الطفل' : 'عنصر'} 
+                {selectedItem ? ' - تعديل' : ' - جديد'}
+              </h3>
+              <button
+                onClick={closeModal}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                ✕
+              </button>
+            </div>
+            
+            {modalType === 'viewChild' && selectedItem && (
+              <div className="space-y-4">
+                <div className="text-center mb-4">
+                  <User className="h-16 w-16 mx-auto text-blue-500 mb-2" />
+                  <h4 className="text-xl font-bold">{selectedItem.name}</h4>
+                </div>
+                
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-medium">العمر:</span>
+                    <span>{selectedItem.age} سنوات</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">الحالة:</span>
+                    <span>{selectedItem.condition}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">ولي الأمر:</span>
+                    <span>{selectedItem.parentName}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">رقم الهاتف:</span>
+                    <span>{selectedItem.phone}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">تاريخ البداية:</span>
+                    <span>{selectedItem.startDate}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">عدد الجلسات:</span>
+                    <span>{selectedItem.sessions}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">مستوى التقدم:</span>
+                    <span className={`px-2 py-1 rounded-full text-xs ${
+                      selectedItem.progress === 'ممتاز' ? 'bg-green-100 text-green-800' : 
+                      selectedItem.progress === 'جيد' ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      {selectedItem.progress}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {modalType !== 'viewChild' && (
+              <div className="space-y-4">
+                <p className="text-gray-600">سيتم إضافة نموذج التعديل/الإضافة هنا</p>
+                <div className="flex space-x-2 space-x-reverse">
+                  <button
+                    onClick={closeModal}
+                    className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition"
+                  >
+                    حفظ
+                  </button>
+                  <button
+                    onClick={closeModal}
+                    className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition"
+                  >
+                    إلغاء
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default SpeechTherapyClinicApp;
