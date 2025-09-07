@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملفات الأطفال - عيادة تقويم النطق</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        .child-table-row:hover {
+            background-color: #f9fafb;
+        }
+        .progress-bar {
+            transition: width 0.6s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-indigo-700 text-white">
+                <div class="flex items-center justify-center h-16 px-4 bg-indigo-800">
+                    <h1 class="text-xl font-bold">عيادة تقويم النطق</h1>
+                </div>
+                <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
+                    <div class="flex items-center px-4 py-3 space-x-3 bg-indigo-800 mx-4 rounded-lg">
+                        <img class="w-10 h-10 rounded-full" src="http://static.photos/people/200x200/5" alt="إخصائية">
+                        <div>
+                            <p class="text-sm font-medium">وفاق وهبي</p>
+                            <p class="text-xs text-indigo-200">إخصائية تقويم النطق</p>
+                        </div>
+                    </div>
+                    
+                    <nav class="flex-1 px-4 space-y-2 mt-6">
+                        <a href="index.html" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-600 hover:text-white">
+                            <i data-feather="home" class="w-5 h-5 ml-2"></i>
+                            الرئيسية
+                        </a>
+                        <a href="appointments.html" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-600 hover:text-white">
+                            <i data-feather="calendar" class="w-5 h-5 ml-2"></i>
+                            المواعيد
+                        </a>
+                        <a href="#" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg bg-indigo-800 text-white">
+                            <i data-feather="users" class="w-5 h-5 ml-2"></i>
+                            ملفات الأطفال
+                        </a>
+                        <a href="reports.html" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-600 hover:text-white">
+                            <i data-feather="file-text" class="w-5 h-5 ml-2"></i>
+                            التقارير اليومية
+                        </a>
+                        <a href="programs.html" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-600 hover:text-white">
+                            <i data-feather="clipboard" class="w-5 h-5 ml-2"></i>
+                            البرنامج اليومي
+                        </a>
+                        <a href="settings.html" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-600 hover:text-white">
+                            <i data-feather="settings" class="w-5 h-5 ml-2"></i>
+                            الإعدادات
+                        </a>
+                    </nav>
+                </div>
+                <div class="p-4 border-t border-indigo-600">
+                    <button class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-500">
+                        <i data-feather="log-out" class="w-5 h-5 ml-2"></i>
+                        تسجيل الخروج
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div class="flex items-center md:hidden">
+                        <button class="text-gray-500 focus:outline-none">
+                            <i data-feather="menu"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <button class="p-1 text-gray-500 rounded-full hover:text-gray-700 focus:outline-none">
+                                <i data-feather="bell"></i>
+                                <span class="notification-badge bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <button class="flex items-center space-x-2 focus:outline-none">
+                                <img class="w-8 h-8 rounded-full" src="http://static.photos/people/200x200/5" alt="User">
+                                <span class="hidden md:block text-sm font-medium">وفاق وهبي</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+                <div class="mb-6 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">ملفات الأطفال</h2>
+                        <p class="text-gray-600">إدارة ملفات الأطفال المسجلين في العيادة</p>
+                    </div>
+                    <button onclick="openAddChildModal()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg flex items-center hover:bg-indigo-700 transition duration-300">
+                        <i data-feather="user-plus" class="ml-2"></i>
+                        إضافة طفل
+                    </button>
+                </div>
+                
+                <!-- Search and Filter -->
+                <div class="bg-white rounded-xl shadow-sm p-4 mb-6" data-aos="fade-up">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+                        <div class="relative flex-1 md:max-w-xs">
+                            <input type="text" placeholder="ابحث عن طفل..." class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            <i data-feather="search" class="absolute right-3 top-2.5 text-gray-400"></i>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <select class="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option>الكل</option>
+                                <option>مرحلة التقييم</option>
+                                <option>مرحلة العلاج</option>
+                                <option>مرحلة المتابعة</option>
+                            </select>
+                            <select class="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option>الكل</option>
+                                <option>أقل من 5 سنوات</option>
+                                <option>5 - 7 سنوات</option>
+                                <option>أكثر من 7 سنوات</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Children Table -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الطفل</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">العمر</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الحالة</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">التقدم</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">آخر زيارة</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="child-table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <img class="h-10 w-10 rounded-full" src="http://static.photos/people/200x200/1" alt="Child">
+                                            </div>
+                                            <div class="mr-4">
+                                                <div class="text-sm font-medium text-gray-900">أحمد محمد</div>
+                                                <div class="text-sm text-gray-500">والدة: سعاد عبدالله</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">5 سنوات</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">مرحلة العلاج</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-24 mr-3">
+                                                <div class="h-2 bg-gray-200 rounded-full">
+                                                    <div class="h-2 bg-green-500 rounded-full progress-bar" style="width: 65%"></div>
+                                                </div>
+                                            </div>
+                                            <span class="text-sm text-gray-500">65%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        10/10/2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                            <i data-feather="eye"></i>
+                                        </button>
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                            <i data-feather="edit"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-900">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                
+                                <tr class="child-table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <img class="h-10 w-10 rounded-full" src="http://static.photos/people/200x200/2" alt="Child">
+                                            </div>
+                                            <div class="mr-4">
+                                                <div class="text-sm font-medium text-gray-900">سارة خالد</div>
+                                                <div class="text-sm text-gray-500">والدة: منى سعيد</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">6 سنوات</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">مرحلة التقييم</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-24 mr-3">
+                                                <div class="h-2 bg-gray-200 rounded-full">
+                                                    <div class="h-2 bg-yellow-500 rounded-full progress-bar" style="width: 30%"></div>
+                                                </div>
+                                            </div>
+                                            <span class="text-sm text-gray-500">30%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        08/10/2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                            <i data-feather="eye"></i>
+                                        </button>
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                            <i data-feather="edit"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-900">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                
+                                <tr class="child-table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <img class="h-10 w-10 rounded-full" src="http://static.photos/people/200x200/3" alt="Child">
+                                            </div>
+                                            <div class="mr-4">
+                                                <div class="text-sm font-medium text-gray-900">يوسف علي</div>
+                                                <div class="text-sm text-gray-500">والدة: هدى ناصر</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">7 سنوات</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">مرحلة المتابعة</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-24 mr-3">
+                                                <div class="h-2 bg-gray-200 rounded-full">
+                                                    <div class="h-2 bg-blue-500 rounded-full progress-bar" style="width: 85%"></div>
+                                                </div>
+                                            </div>
+                                            <span class="text-sm text-gray-500">85%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        05/10/2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                            <i data-feather="eye"></i>
+                                        </button>
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                            <i data-feather="edit"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-900">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                
+                                <tr class="child-table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <img class="h-10 w-10 rounded-full" src="http://static.photos/people/200x200/4" alt="Child">
+                                            </div>
+                                            <div class="mr-4">
+                                                <div class="text-sm font-medium text-gray-900">ليان وائل</div>
+                                                <div class="text-sm text-gray-500">والدة: ريم خالد</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">5 سنوات</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">مرحلة العلاج</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-24 mr-3">
+                                                <div class="h-2 bg-gray-200 rounded-full">
+                                                    <div class="h-2 bg-green-500 rounded-full progress-bar" style="width: 60%"></div>
+                                                </div>
+                                            </div>
+                                            <span class="text-sm text-gray-500">60%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        03/10/2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                            <i data-feather="eye"></i>
+                                        </button>
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                            <i data-feather="edit"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-900">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                
+                                <tr class="child-table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <img class="h-10 w-10 rounded-full" src="http://static.photos/people/200x200/6" alt="Child">
+                                            </div>
+                                            <div class="mr-4">
+                                                <div class="text-sm font-medium text-gray-900">عمر سامي</div>
+                                                <div class="text-sm text-gray-500">والدة: نادية راشد</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">6 سنوات</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">مرحلة التقييم</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-24 mr-3">
+                                                <div class="h-2 bg-gray-200 rounded-full">
+                                                    <div class="h-2 bg-yellow-500 rounded-full progress-bar" style="width: 25%"></div>
+                                                </div>
+                                            </div>
+                                            <span class="text-sm text-gray-500">25%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        01/10/2023
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                            <i data-feather="eye"></i>
+                                        </button>
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                            <i data-feather="edit"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-900">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
+                        <div class="flex-1 flex justify-between sm:hidden">
+                            <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                السابق
+                            </a>
+                            <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                التالي
+                            </a>
+                        </div>
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700">
+                                    عرض
+                                    <span class="font-medium">1</span>
+                                    إلى
+                                    <span class="font-medium">5</span>
+                                    من
+                                    <span class="font-medium">24</span>
+                                    نتائج
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">السابق</span>
+                                        <i data-feather="chevron-right"></i>
+                                    </a>
+                                    <a href="#" aria-current="page" class="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm
+</body>
+</html>
