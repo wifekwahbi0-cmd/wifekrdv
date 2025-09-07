@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المواعيد - عيادة تقويم النطق</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        .calendar-day {
+            transition: all 0.2s ease;
+        }
+        .calendar-day:hover {
+            transform: scale(1.05);
+        }
+        .appointment-card {
+            transition: all 0.3s ease;
+        }
+        .appointment-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 bg-indigo-700 text-white">
+                <div class="flex items-center justify-center h-16 px-4 bg-indigo-800">
+                    <h1 class="text-xl font-bold">عيادة تقويم النطق</h1>
+                </div>
+                <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
+                    <div class="flex items-center px-4 py-3 space-x-3 bg-indigo-800 mx-4 rounded-lg">
+                        <img class="w-10 h-10 rounded-full" src="http://static.photos/people/200x200/5" alt="إخصائية">
+                        <div>
+                            <p class="text-sm font-medium">وفاق وهبي</p>
+                            <p class="text-xs text-indigo-200">إخصائية تقويم النطق</p>
+                        </div>
+                    </div>
+                    
+                    <nav class="flex-1 px-4 space-y-2 mt-6">
+                        <a href="index.html" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-600 hover:text-white">
+                            <i data-feather="home" class="w-5 h-5 ml-2"></i>
+                            الرئيسية
+                        </a>
+                        <a href="#" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg bg-indigo-800 text-white">
+                            <i data-feather="calendar" class="w-5 h-5 ml-2"></i>
+                            المواعيد
+                        </a>
+                        <a href="children.html" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-600 hover:text-white">
+                            <i data-feather="users" class="w-5 h-5 ml-2"></i>
+                            ملفات الأطفال
+                        </a>
+                        <a href="reports.html" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-600 hover:text-white">
+                            <i data-feather="file-text" class="w-5 h-5 ml-2"></i>
+                            التقارير اليومية
+                        </a>
+                        <a href="programs.html" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-600 hover:text-white">
+                            <i data-feather="clipboard" class="w-5 h-5 ml-2"></i>
+                            البرنامج اليومي
+                        </a>
+                        <a href="settings.html" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-indigo-200 hover:bg-indigo-600 hover:text-white">
+                            <i data-feather="settings" class="w-5 h-5 ml-2"></i>
+                            الإعدادات
+                        </a>
+                    </nav>
+                </div>
+                <div class="p-4 border-t border-indigo-600">
+                    <button class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-500">
+                        <i data-feather="log-out" class="w-5 h-5 ml-2"></i>
+                        تسجيل الخروج
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div class="flex items-center md:hidden">
+                        <button class="text-gray-500 focus:outline-none">
+                            <i data-feather="menu"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <button class="p-1 text-gray-500 rounded-full hover:text-gray-700 focus:outline-none">
+                                <i data-feather="bell"></i>
+                                <span class="notification-badge bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <button class="flex items-center space-x-2 focus:outline-none">
+                                <img class="w-8 h-8 rounded-full" src="http://static.photos/people/200x200/5" alt="User">
+                                <span class="hidden md:block text-sm font-medium">وفاق وهبي</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+                <div class="mb-6 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">إدارة المواعيد</h2>
+                        <p class="text-gray-600">عرض وجدولة مواعيد الحصص مع الأطفال</p>
+                    </div>
+                    <button onclick="openAddAppointmentModal()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg flex items-center hover:bg-indigo-700 transition duration-300">
+                        <i data-feather="plus" class="ml-2"></i>
+                        إضافة موعد
+                    </button>
+                </div>
+                
+                <!-- Calendar and Appointments -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Calendar Section -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 lg:col-span-1" data-aos="fade-up">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold text-gray-800">التقويم</h3>
+                            <div class="flex space-x-2">
+                                <button class="p-1 rounded-full hover:bg-gray-100">
+                                    <i data-feather="chevron-right"></i>
+                                </button>
+                                <button class="p-1 rounded-full hover:bg-gray-100">
+                                    <i data-feather="chevron-left"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-7 gap-1 mb-2">
+                            <div class="text-center text-sm font-medium text-gray-500 py-1">أحد</div>
+                            <div class="text-center text-sm font-medium text-gray-500 py-1">إثنين</div>
+                            <div class="text-center text-sm font-medium text-gray-500 py-1">ثلاثاء</div>
+                            <div class="text-center text-sm font-medium text-gray-500 py-1">أربعاء</div>
+                            <div class="text-center text-sm font-medium text-gray-500 py-1">خميس</div>
+                            <div class="text-center text-sm font-medium text-gray-500 py-1">جمعة</div>
+                            <div class="text-center text-sm font-medium text-gray-500 py-1">سبت</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-7 gap-1">
+                            <div class="calendar-day text-center py-2 text-gray-400">25</div>
+                            <div class="calendar-day text-center py-2 text-gray-400">26</div>
+                            <div class="calendar-day text-center py-2 text-gray-400">27</div>
+                            <div class="calendar-day text-center py-2 text-gray-400">28</div>
+                            <div class="calendar-day text-center py-2 text-gray-400">29</div>
+                            <div class="calendar-day text-center py-2 text-gray-400">30</div>
+                            <div class="calendar-day text-center py-2 rounded-full bg-indigo-100 text-indigo-600 font-medium">1</div>
+                            
+                            <div class="calendar-day text-center py-2">2</div>
+                            <div class="calendar-day text-center py-2">3</div>
+                            <div class="calendar-day text-center py-2">4</div>
+                            <div class="calendar-day text-center py-2">5</div>
+                            <div class="calendar-day text-center py-2">6</div>
+                            <div class="calendar-day text-center py-2">7</div>
+                            <div class="calendar-day text-center py-2">8</div>
+                            
+                            <div class="calendar-day text-center py-2">9</div>
+                            <div class="calendar-day text-center py-2 rounded-full bg-indigo-600 text-white font-medium">10</div>
+                            <div class="calendar-day text-center py-2">11</div>
+                            <div class="calendar-day text-center py-2">12</div>
+                            <div class="calendar-day text-center py-2">13</div>
+                            <div class="calendar-day text-center py-2">14</div>
+                            <div class="calendar-day text-center py-2">15</div>
+                            
+                            <div class="calendar-day text-center py-2">16</div>
+                            <div class="calendar-day text-center py-2">17</div>
+                            <div class="calendar-day text-center py-2">18</div>
+                            <div class="calendar-day text-center py-2">19</div>
+                            <div class="calendar-day text-center py-2">20</div>
+                            <div class="calendar-day text-center py-2">21</div>
+                            <div class="calendar-day text-center py-2">22</div>
+                            
+                            <div class="calendar-day text-center py-2">23</div>
+                            <div class="calendar-day text-center py-2">24</div>
+                            <div class="calendar-day text-center py-2">25</div>
+                            <div class="calendar-day text-center py-2">26</div>
+                            <div class="calendar-day text-center py-2">27</div>
+                            <div class="calendar-day text-center py-2">28</div>
+                            <div class="calendar-day text-center py-2">29</div>
+                            
+                            <div class="calendar-day text-center py-2">30</div>
+                            <div class="calendar-day text-center py-2 text-gray-400">1</div>
+                            <div class="calendar-day text-center py-2 text-gray-400">2</div>
+                            <div class="calendar-day text-center py-2 text-gray-400">3</div>
+                            <div class="calendar-day text-center py-2 text-gray-400">4</div>
+                            <div class="calendar-day text-center py-2 text-gray-400">5</div>
+                            <div class="calendar-day text-center py-2 text-gray-400">6</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Appointments List -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 lg:col-span-2" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold text-gray-800">مواعيد اليوم</h3>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 text-sm border rounded-lg hover:bg-gray-50">اليوم</button>
+                                <button class="px-3 py-1 text-sm border rounded-lg hover:bg-gray-50">الأسبوع</button>
+                                <button class="px-3 py-1 text-sm border rounded-lg hover:bg-gray-50">الشهر</button>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <!-- Appointment Card -->
+                            <div class="appointment-card border rounded-lg p-4 hover:border-indigo-300 transition duration-300">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex items-start space-x-4">
+                                        <img class="w-12 h-12 rounded-full" src="http://static.photos/people/200x200/1" alt="Child">
+                                        <div>
+                                            <h4 class="font-medium">أحمد محمد</h4>
+                                            <p class="text-sm text-gray-500">حصة تقويم نطق - جلسة 5</p>
+                                            <div class="flex items-center mt-1 text-sm text-gray-500">
+                                                <i data-feather="clock" class="w-4 h-4 ml-1"></i>
+                                                <span>10:00 صباحاً - 11:00 صباحاً</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="p-2 text-gray-500 hover:text-indigo-600 rounded-full hover:bg-indigo-50">
+                                            <i data-feather="edit"></i>
+                                        </button>
+                                        <button class="p-2 text-gray-500 hover:text-red-600 rounded-full hover:bg-red-50">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Appointment Card -->
+                            <div class="appointment-card border rounded-lg p-4 hover:border-indigo-300 transition duration-300">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex items-start space-x-4">
+                                        <img class="w-12 h-12 rounded-full" src="http://static.photos/people/200x200/2" alt="Child">
+                                        <div>
+                                            <h4 class="font-medium">سارة خالد</h4>
+                                            <p class="text-sm text-gray-500">جلسة تقييم أولية</p>
+                                            <div class="flex items-center mt-1 text-sm text-gray-500">
+                                                <i data-feather="clock" class="w-4 h-4 ml-1"></i>
+                                                <span>12:30 ظهراً - 01:30 ظهراً</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="p-2 text-gray-500 hover:text-indigo-600 rounded-full hover:bg-indigo-50">
+                                            <i data-feather="edit"></i>
+                                        </button>
+                                        <button class="p-2 text-gray-500 hover:text-red-600 rounded-full hover:bg-red-50">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Appointment Card -->
+                            <div class="appointment-card border rounded-lg p-4 hover:border-indigo-300 transition duration-300">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex items-start space-x-4">
+                                        <img class="w-12 h-12 rounded-full" src="http://static.photos/people/200x200/3" alt="Child">
+                                        <div>
+                                            <h4 class="font-medium">يوسف علي</h4>
+                                            <p class="text-sm text-gray-500">متابعة علاج - جلسة 3</p>
+                                            <div class="flex items-center mt-1 text-sm text-gray-500">
+                                                <i data-feather="clock" class="w-4 h-4 ml-1"></i>
+                                                <span>03:00 مساءً - 04:00 مساءً</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="p-2 text-gray-500 hover:text-indigo-600 rounded-full hover:bg-indigo-50">
+                                            <i data-feather="edit"></i>
+                                        </button>
+                                        <button class="p-2 text-gray-500 hover:text-red-600 rounded-full hover:bg-red-50">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Appointment Card -->
+                            <div class="appointment-card border rounded-lg p-4 hover:border-indigo-300 transition duration-300">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex items-start space-x-4">
+                                        <img class="w-12 h-12 rounded-full" src="http://static.photos/people/200x200/4" alt="Child">
+                                        <div>
+                                            <h4 class="font-medium">ليان وائل</h4>
+                                            <p class="text-sm text-gray-500">جلسة تدريب - حرف الراء</p>
+                                            <div class="flex items-center mt-1 text-sm text-gray-500">
+                                                <i data-feather="clock" class="w-4 h-4 ml-1"></i>
+                                                <span>05:00 مساءً - 06:00 مساءً</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="p-2 text-gray-500 hover:text-indigo-600 rounded-full hover:bg-indigo-50">
+                                            <i data-feather="edit"></i>
+                                        </button>
+                                        <button class="p-2 text-gray-500 hover:text-red-600 rounded-full hover:bg-red-50">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add Appointment Modal -->
+    <div id="addAppointmentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md" data-aos="zoom-in">
+            <div class="flex justify-between items-center border-b p-4">
+                <h3 class="text-lg font-semibold">إضافة موعد جديد</h3>
+                <button onclick="closeAddAppointmentModal()" class="text-gray-500 hover:text-gray-700">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <form id="addAppointmentForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الطفل</label>
+                        <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            <option>أحمد محمد</option>
+                            <option>سارة خالد</option>
+                            <option>يوسف علي</option>
+                            <option>ليان وائل</option>
+                            <option>عمر سامي</option>
+                            <option>نورا أحمد</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">نوع الجلسة</label>
+                        <select class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            <option>حصة تقويم نطق</option>
+                            <option>جلسة تقييم</option>
+                            <option>متابعة علاج</option>
+                            <option>جلسة تدريب</option>
+                            <option>استشارة أولياء الأمور</option>
+                        </select>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">التاريخ</label>
+                            <input type="date" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">الوقت</label>
+                            <input type="time" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ملاحظات</label>
+                        <textarea rows="3" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <button type="button" onclick="closeAddAppointmentModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">
+                            إلغاء
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex items-center">
+                            <i data-feather="save" class="ml-2"></i>
+                            حفظ الموعد
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        feather.replace();
+        AOS.init();
+        
+        function openAddAppointmentModal() {
+            document.getElementById('addAppointmentModal').classList.remove('hidden');
+        }
+        
+        function closeAddAppointmentModal() {
+            document.getElementById('addAppointmentModal').classList.add('hidden');
+        }
+        
+        document.getElementById('addAppointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            closeAddAppointmentModal();
+            // Here you would typically send the data to your backend
+            alert('تم إضافة الموعد بنجاح!');
+        });
+    </script>
+</body>
+</html>
